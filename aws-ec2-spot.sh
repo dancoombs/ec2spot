@@ -5,6 +5,10 @@ if [ "$1" = "" ]; then echo "USER ERROR: please specify a configuration file"; e
 . $1 || exit -1
 ROOT_VOL_ID=$ec2spotter_volume_name
 
+if [ "x$2" = "x" ]; then echo "USER ERROR: please specify a bid price"; exit -1; fi
+
+ec2spotter_bid_price = $2
+
 echo "ROOT_VOL_ID=${ROOT_VOL_ID}"
 
 cat >user-data.tmp <<EOF
@@ -17,15 +21,9 @@ echo AWSSecretKey=$aws_secret_key >> /root/.aws.creds
 
 cd /root
 
-git clone https://$git_username:$git_password@github.com/dancoombs/ec2spot.git
-
 cd ec2spot
 
-apt-get update
-apt-get install -y python-pip python-setuptools
-pip install awscli
-
-./setup_mount.sh --force ${ROOT_VOL_ID}
+./setup_mount.sh ${ROOT_VOL_ID}
 
 echo "END USER DATA" >> /root/user_data_run
 EOF
@@ -61,5 +59,5 @@ cat >specs.tmp <<EOF
 }
 EOF
 
-aws ec2 request-spot-instances --spot-price $ec2spotter_bid_price --type 'one-time' --launch-specification file://specs.tmp > out.txt
+aws ec2 request-spot-instances --spot-price ${ec2spotter_bid_price} --type 'one-time' --launch-specification file://specs.tmp > out.txt
 
