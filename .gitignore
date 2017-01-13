@@ -1,5 +1,4 @@
-out.txt
-p2_spot.conf
+aws.conf
 *.tmp
 
 # Byte-compiled / optimized / DLL files
