@@ -19,7 +19,7 @@ cd /root
 
 git clone https://$git_username:$git_password@github.com/dancoombs/ec2spot.git
 
-cd /ec2spot
+cd ec2spot
 
 apt-get update
 apt-get install -y python-pip python-setuptools
@@ -34,7 +34,7 @@ userData=$(base64 user-data.tmp | tr -d '\n');
 
 cat >specs.tmp <<EOF
 {
-  "KeyName" : "aws-key",
+  "KeyName" : "$ssh_key",
   "InstanceType": "$ec2spotter_instance_type",
   "ImageId" : "$ec2spotter_preboot_image_id",
   "UserData" : "${userData}",
