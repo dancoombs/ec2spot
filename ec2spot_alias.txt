@@ -1,0 +1,3 @@
+alias aws-spot='source ./ec2spot/fastai_spot.sh ec2spot/aws.conf'
+alias aws-ssh='ssh -i ~/.ssh/aws-key.pem ubuntu@$aws_ip'
+alias aws-terminate='aws ec2 terminate-instances --instance-ids $instanceId'
