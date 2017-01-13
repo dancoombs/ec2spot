@@ -25,7 +25,7 @@ echo ""
 echo "Attaching volume ${ROOT_VOL_ID} as /dev/sdf"
 
 # Attach volume
-aws ec2 attach-volume --volume-id ${ROOT_VOL_ID} --instance ${INSTANCE_ID} -device /dev/sdf  || exit -1
+aws ec2 attach-volume --volume-id ${ROOT_VOL_ID} --instance ${INSTANCE_ID} --device /dev/sdf  || exit -1
 
 while ! lsblk /dev/xvdf
 do
@@ -47,23 +47,23 @@ mkdir $NEWMNT
 # point of no return... 
 # modify /sbin/init on the ephemeral volume to chain-load from the persistent EBS volume, and then reboot.
 #
-mv /sbin/init /sbin/init.backup
-cat >/sbin/init <<EOF
-#!/bin/sh
-mount $DEVICE $NEWMNT
-[ ! -d $NEWMNT/$OLDMNT ] && mkdir -p $NEWMNT/$OLDMNT
+# mv /sbin/init /sbin/init.backup
+# cat >/sbin/init <<EOF
+# #!/bin/sh
+# mount $DEVICE $NEWMNT
+# [ ! -d $NEWMNT/$OLDMNT ] && mkdir -p $NEWMNT/$OLDMNT
 
-cd $NEWMNT
-pivot_root . ./$OLDMNT
+# cd $NEWMNT
+# pivot_root . ./$OLDMNT
 
-for dir in /dev /proc /sys /run; do
-    echo "Moving mounted file system ${OLDMNT}\${dir} to \$dir."
-    mount --move ./${OLDMNT}\${dir} \${dir}
-done
-exec chroot . /sbin/init
-EOF
-chmod +x /sbin/init
-shutdown -r now
+# for dir in /dev /proc /sys /run; do
+#     echo "Moving mounted file system ${OLDMNT}\${dir} to \$dir."
+#     mount --move ./${OLDMNT}\${dir} \${dir}
+# done
+# exec chroot . /sbin/init
+# EOF
+# chmod +x /sbin/init
+# shutdown -r now
 
 echo "END MOUNT" >> /root/user_data_mount
 echo "END MOUNT"
