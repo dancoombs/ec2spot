@@ -18,6 +18,7 @@ export AWS_CREDENTIAL_FILE=/root/.aws.creds
 . /root/.aws.creds
 export AWS_ACCESS_KEY=$AWSAccessKeyId
 export AWS_SECRET_KEY=$AWSSecretKey
+export AWS_DEFAULT_REGION=us-west-2
 
 INSTANCE_ID=`curl -s http://169.254.169.254/latest/meta-data/instance-id`
 
@@ -25,7 +26,7 @@ echo ""
 echo "Attaching volume ${ROOT_VOL_ID} as /dev/sdf"
 
 # Attach volume
-aws ec2 attach-volume --volume-id ${ROOT_VOL_ID} --instance ${INSTANCE_ID} --device /dev/sdf  || exit -1
+aws ec2 attach-volume --volume-id ${ROOT_VOL_ID} --instance ${INSTANCE_ID} --device /dev/sdf --output text || exit -1
 
 while ! lsblk /dev/xvdf
 do
