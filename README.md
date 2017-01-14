@@ -75,6 +75,9 @@ A few things to consider while working:
 2. The instance can be terminated with just 2 minutes of warning if the running price goes above your bid price. Be sure to save your work consistently, and bid high if you would like to stay running.
 
 #### Terminate Instance
+
+MUST RUN WHEN YOU ARE DONE WORKING OR YOU WILL CONTINUE TO BE CHARGED
+
 Run:
 ```bash
 aws-terminate
