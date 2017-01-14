@@ -1,4 +1,4 @@
-aws.conf
+*.conf
 *.tmp
 
 # Byte-compiled / optimized / DLL files
