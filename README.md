@@ -15,8 +15,11 @@ cd ec2spot
 ```
 (Method 2)  Use the AWS console to set up:
 1. Security group
+
 2. VPC and subnet (must be in us-west-2b)
-3. ssh key
+
+3. SSH key
+
 4. EBS Volume to be used as persistent storage
 
 Copy ID's of all of the above into aws.conf:
