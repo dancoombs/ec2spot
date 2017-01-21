@@ -76,17 +76,12 @@ def boto_start(filename, send_script=False):
 	request = resp['SpotInstanceRequests'][0]
 	requestId = request['SpotInstanceRequestId']
 	print('Waiting for spot reqeust fulfill...')
-	waiter.wait(
-	    SpotInstanceRequestIds=[
-	        requestId
-	    ]
-	)
+	waiter.wait(SpotInstanceRequestIds=[requestId])
 
 	# get request id
-	ids = client.describe_spot_instance_requests(        
-	    SpotInstanceRequestIds=[
-	        requestId
-	    ])
+	ids = client.describe_spot_instance_requests(
+			SpotInstanceRequestIds=[requestId]
+		)
 
 	# get instance id
 	instanceId = ids['SpotInstanceRequests'][0]['InstanceId']
@@ -104,8 +99,7 @@ def boto_start(filename, send_script=False):
 			Tags=[{
 				'Key': 'Name',
 				'Value': inst_name
-			},
-			]
+			}]
 		)
 
 	# attach volume from configs
