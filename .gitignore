@@ -90,3 +90,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# boto setup outputs
+ec2spot/setup_output.txt
